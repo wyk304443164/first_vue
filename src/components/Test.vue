@@ -1,53 +1,74 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+  <section>
+    <header>
+
+      <div class="top-test">
+        <router-link to="/item">ffff</router-link>
+        <item v-for="obj in lists" :key="obj.id">
+          <span slot="xx">{{obj.name}}</span>
+          <span slot="ff">slot2</span>
+        </item>
+      </div>
+
+      <ul>
+        <li
+          is="exam-item"
+          v-for="(obj,index) in lists"
+          :left-text="obj.id"
+          :right-text="obj.name"
+          :is-select="obj.isSelect"
+          :index="index"
+
+          @item-select="itemSelect"
+
+          :key="obj.id"></li>
+      </ul>
+
+    </header>
+  </section>
 </template>
 
 <script>
-export default {
-  name: 'Test',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+
+  import item from './Item.vue'
+  import ExamItem from './exam/ExamItem.vue'
+
+  export default {
+    name: 'Test',
+    components: {
+      item: item,
+      ExamItem: ExamItem,
+    },
+    data() {
+      return {
+        lists: [{
+          id: 1,
+          name: 'xx',
+          isSelect: false,
+        }, {
+          id: 2,
+          name: 'xx1',
+          isSelect: true,
+        }]
+      }
+    },
+    methods: {
+      itemSelect(i) {
+        this.lists.forEach((item, index) => {
+          item.isSelect = i === index;
+        });
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-h1, h2 {
-  font-weight: normal;
-}
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  @bg: #999;
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  .top-test {
+    background: @bg;
+  }
 
-a {
-  color: #42b983;
-}
 </style>
